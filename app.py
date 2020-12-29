@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-model = load_model("catboost")
+#model = load_model("catboost")
 
 def predict(model, input_df):
     predictions_df = predict_model(estimator = model, data = input_df)
@@ -25,7 +25,7 @@ def run():
     if add_selectbox == 'Online':
 
         Age = st.number_input("Age", min_value = 18, max_value = 100, step = 1)
-        BusinessTravel = st.select_slider("BusinessTravel", options = ['Travel_Rarely', 'Travel_Frequently', 'Non-Travel'])
+        BusinessTravel = st.select_slider("BusinessTravel", options = ['Non-Travel', 'Travel_Rarely', 'Travel_Frequently'])
         DailyRate = st.number_input("DailyRate", min_value = 100, max_value = 1500, step = 1)
         Department = st.select_slider("Department", options = ['Sales', 'Research & Development', 'Human Resources'])
         DistanceFromHome = st.number_input("DistanceFromHome", min_value = 1, max_value = 30, step = 1)
@@ -33,7 +33,7 @@ def run():
         EducationField = st.select_slider("EducationField", options = ['Life Sciences', 'Other', 'Medical', 'Marketing', 'Technical Degree', 'Human Resources'])
         EnvironmentSatisfaction = st.select_slider("EnvironmentSatisfaction", options = [1, 2, 3, 4])
         Gender = st.select_slider("Gender", options = ["Female", "Male"])
-        HourlyRate = st.number_input("HourlyRate", min_value = 0, max_value = 0, step = 1)
+        HourlyRate = st.number_input("HourlyRate", min_value = 0, max_value = 100, step = 1)
         JobInvolvement = st.select_slider("JobInvolvement", options = [1, 2, 3, 4])
         JobLevel = st.select_slider("JobLevel", options = [1, 2, 3, 4, 5])
         JobRole = st.select_slider("JobRole", options = ['Sales Executive', 'Research Scientist', 'Laboratory Technician', 'Manufacturing Director', 'Healthcare Representative', 'Manager', 'Sales Representative', 'Research Director', 'Human Resources'])
