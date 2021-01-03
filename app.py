@@ -33,7 +33,7 @@ def run():
         EducationField = st.select_slider("EducationField", options = ['Life Sciences', 'Other', 'Medical', 'Marketing', 'Technical Degree', 'Human Resources'])
         EnvironmentSatisfaction = st.select_slider("EnvironmentSatisfaction", options = [1, 2, 3, 4])
         Gender = st.select_slider("Gender", options = ["Female", "Male"])
-        HourlyRate = st.number_input("HourlyRate", min_value = 0, max_value = 100, step = 1)
+        HourlyRate = st.number_input("HourlyRate", min_value = 1, max_value = 100, step = 1)
         JobInvolvement = st.select_slider("JobInvolvement", options = [1, 2, 3, 4])
         JobLevel = st.select_slider("JobLevel", options = [1, 2, 3, 4, 5])
         JobRole = st.select_slider("JobRole", options = ['Sales Executive', 'Research Scientist', 'Laboratory Technician', 'Manufacturing Director', 'Healthcare Representative', 'Manager', 'Sales Representative', 'Research Director', 'Human Resources'])
@@ -41,7 +41,7 @@ def run():
         MaritalStatus = st.select_slider("MaritalStatus", options = ['Single', 'Married', 'Divorced'])
         MonthlyIncome = st.number_input("MonthlyIncome", min_value = 1000, max_value = 20000, step = 1)
         MonthlyRate = st.number_input("MonthlyRate", min_value = 2000, max_value = 27000, step = 1)
-        NumCompaniesWorked = st.number_input("NumCompaniesWorked", min_value = 0, max_value = 9, step = 1)
+        NumCompaniesWorked = st.slider("NumCompaniesWorked", min_value = 0, max_value = 9, step = 1)
         Over18 = st.select_slider("Over18", options = ["N", "Y"])
         OverTime = st.select_slider("OverTime", options = ["N", "Y"])
         PercentSalaryHike = st.number_input("PercentSalaryHike", min_value = 10, max_value = 25, step = 1)
@@ -49,13 +49,13 @@ def run():
         RelationshipSatisfaction = st.select_slider("RelationshipSatisfaction", options = [1, 2, 3, 4])
         # StandardHours =
         StockOptionLevel = st.select_slider("StockOptionLevel", options = [0, 1, 2, 3])
-        TotalWorkingYears = st.number_input("TotalWorkingYears", min_value = 0, max_value = 40, step = 1)
-        TrainingTimesLastYear = st.number_input("TrainingTimesLastYear", min_value = 0, max_value = 6, step = 1)
-        WorkLifeBalance = st.number_input("WorkLifeBalance", min_value = 0, max_value = 4, step = 1)
-        YearsAtCompany = st.number_input("YearsAtCompany", min_value = 0, max_value = 40, step = 1)
-        YearsInCurrentRole = st.number_input("YearsInCurrentRole", min_value = 0, max_value = 18, step = 1)
-        YearsSinceLastPromotion = st.number_input("YearsSinceLastPromotion", min_value = 0, max_value = 15, step = 1)
-        YearsWithCurrManager = st.number_input("YearsWithCurrManager", min_value = 0, max_value = 18, step = 1)
+        TotalWorkingYears = st.slider("TotalWorkingYears", min_value = 0, max_value = 40, step = 1)
+        TrainingTimesLastYear = st.slider("TrainingTimesLastYear", min_value = 0, max_value = 6, step = 1)
+        WorkLifeBalance = st.slider("WorkLifeBalance", min_value = 0, max_value = 4, step = 1)
+        YearsAtCompany = st.slider("YearsAtCompany", min_value = 0, max_value = 40, step = 1)
+        YearsInCurrentRole = st.slider("YearsInCurrentRole", min_value = 0, max_value = 18, step = 1)
+        YearsSinceLastPromotion = st.slider("YearsSinceLastPromotion", min_value = 0, max_value = 15, step = 1)
+        YearsWithCurrManager = st.slider("YearsWithCurrManager", min_value = 0, max_value = 18, step = 1)
 
         output=""
 
