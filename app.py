@@ -6,23 +6,24 @@ import numpy as np
 #model = load_model("catboost")
 
 def predict(model, input_df):
+    """
+    Make prediction using model loaded earlier
+    """
     predictions_df = predict_model(estimator = model, data = input_df)
     predictions = predictions_df['Label'][0]
     return predictions
 
 def run():
 
-    add_selectbox = st.sidebar.selectbox(
-    "How would you like to predict?",
-    ("Online", "Batch"))
-
-    st.sidebar.info('This app is created to predict if an employee will leave in 6 months')
-    st.sidebar.success('https://www.pycaret.org')
+    # Select whether or not to do single row or multiple row predictions
+    add_selectbox = st.sidebar.selectbox("Single or Multi predict?", ("Single", "Multi"))
     
-
+    # Title
     st.title("HR Attrition")
+    st.subheader("Using this app you can identify whether an employee(s) will potentially leave in the next six months and also why.")
 
-    if add_selectbox == 'Online':
+    # Create individual app elements to provide input for single row prediction
+    if add_selectbox == "Single":
 
         Age = st.number_input("Age", min_value = 18, max_value = 100, step = 1)
         BusinessTravel = st.select_slider("BusinessTravel", options = ['Non-Travel', 'Travel_Rarely', 'Travel_Frequently'])
@@ -57,7 +58,7 @@ def run():
         YearsSinceLastPromotion = st.slider("YearsSinceLastPromotion", min_value = 0, max_value = 15, step = 1)
         YearsWithCurrManager = st.slider("YearsWithCurrManager", min_value = 0, max_value = 18, step = 1)
 
-        output=""
+        output = ""
 
         input_dict = {"Age" : Age, 
                     "BusinessTravel" :  BusinessTravel ,
@@ -90,21 +91,29 @@ def run():
                     "YearsInCurrentRole" :  YearsInCurrentRole ,
                     "YearsSinceLastPromotion" :  YearsSinceLastPromotion ,
                     "YearsWithCurrManager" :  YearsWithCurrManager}
-        input_df = pd.DataFrame([input_dict])
 
+        # Create row of data based upon the element inputs
+        input_df = pd.DataFrame([input_dict])
+ 
+        # Make single prediction for data input using the model
         if st.button("Predict"):
             output = predict(model = model, input_df = input_df)
             output = '$' + str(output)
 
-        st.success('The output is {}'.format(output))
+        # Output of the prediction
+        st.success('{}'.format(output), 'this person will leave.')
 
-    if add_selectbox == 'Batch':
+        # NEED REASON PLOT HERE
 
-        file_upload = st.file_uploader("Upload csv file for predictions", type=["csv"])
+    # Batch prediction (multiple people to predict)
+    if add_selectbox == "Multi":
 
+        file_upload = st.file_uploader("Upload csv file for predictions", type = ["csv"]) # Upload rows to predict
+
+        # Make prediction and output data
         if file_upload is not None:
             data = pd.read_csv(file_upload)
-            predictions = predict_model(estimator=model,data=data)
+            predictions = predict_model(estimator = model, data = data)
             st.write(predictions)
 
 if __name__ == '__main__':
