@@ -121,7 +121,8 @@ def run():
     # Batch prediction (multiple people to predict)
     if add_selectbox == "Multi":
 
-        file_upload = st.file_uploader("Upload csv file for predictions", type = ["csv"]) # Upload rows to predict
+        # Upload rows to predict
+        file_upload = st.file_uploader("Upload csv file for predictions", type = ["csv"])
 
         # Make prediction and output data
         if file_upload is not None:

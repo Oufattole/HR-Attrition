@@ -1,12 +1,12 @@
 # HR-Attrition 👔
-Should I stay or should I go? Predicting whether employees will leave + why.
+Will they stay or will they go? Predicting whether employees will leave + why.
 
 ## Why this was done
 I haven't done any HR analytics before and the idea of encorporating ML/DL with this domain excites me. The main problem is acquiring HR data. Thankfully IBM has produced a synthentic dataset which I am utilising.
 
-I feel that there are a lot of people within companies that add a ton of value to teams that may/may not go unnoticed and if they were to leave then progress within their teams could stall or worst case regress. If these individuals can be identified early and not just identified but told WHY they might leave, that is the power of this.
+I feel that there are a lot of people within companies that add a ton of value to teams that may/may not go unnoticed and if they were to leave then progress within their teams could stall or worst case regress. If these individuals can be identified early and not just identified but understand WHY they might leave, that is the power of this.
 
-Note: There is a lot of discussion about ML, DL and AI replacing jobs, this doesn't do so. I see the previously mentioned techniques allowing users to increase their productivity and in this particular use case, potentially saving employees leaving and improve the employees' work environment. If you had 3000 employees you could identify who might leave manually but not in a quick enough time nor efficient. If you combine the knowledge of users and the model that is where this is powerful.
+Note: There is a lot of discussion about ML, DL and AI replacing jobs, this doesn't do so. I see the previously mentioned techniques allowing users to increase their productivity and in this particular use case, potentially saving employees leaving and improving the employees' work environment. If you had 3000 employees you could identify who might leave manually but not in a quick enough time nor efficiently. If you combine the knowledge of users and the model that is where this is powerful.
 
 ## Who this benefits
 * 🕴️🕴️ **HR** - the obvious one. If employees respond to a survey and you have thousands of employees, without analysis you cannot efficiently find out who might be at risk of leaving. Secondly you will want to know employee's specific reasons as to why they might be at risk of leaving, it needs to be personal. Having a model that can tell you who might be at risk to leave the company and why they might leave saves HR time and offers a possible "save" of the employees at risk of leaving.
