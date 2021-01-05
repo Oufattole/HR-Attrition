@@ -2,8 +2,11 @@ from pycaret.classification import *
 import streamlit as st
 import pandas as pd
 import numpy as np
+import joblib
+import shap
 
-#model = load_model("catboost")
+model = joblib.load('rf_model.pkl')
+data = pd.read_csv("data.csv")
 
 def predict(model, input_df):
     """
@@ -111,11 +114,16 @@ def run():
         # Make single prediction for data input using the model
         if st.button("Predict"):
             output = predict(model = model, input_df = input_df)
-            output = '$' + str(output)
 
         # Output of the prediction
         st.success('{} this person will leave.'.format(output))
 
+
+        # WORKING ON REASON PLOT
+        explainer = shap.TreeExplainer(model)
+        shap_values = explainer.shap_values(data)
+
+        st.write(shap.force_plot(explainer.expected_value, shap_values[0,:], input_df.iloc[0,:]), unsafe_allow_html=True)
         # NEED REASON PLOT HERE
 
     # Batch prediction (multiple people to predict)
