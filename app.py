@@ -1,12 +1,14 @@
 from pycaret.classification import *
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import numpy as np
 import joblib
-import shap
+from lime.lime_tabular import LimeTabularExplainer
 
 model = joblib.load('rf_model.pkl')
-data = pd.read_csv("data.csv")
+a = pd.read_csv("data.csv") 
+print(a.head())
 
 def predict(model, input_df):
     """
@@ -115,16 +117,17 @@ def run():
         if st.button("Predict"):
             output = predict(model = model, input_df = input_df)
 
-        # Output of the prediction
-        st.success('{} this person will leave.'.format(output))
+            # Output of the prediction
+            st.success('{} this person will leave.'.format(output))
 
+            exp = LimeTabularExplainer(a.values, feature_names= a.columns.tolist())
+            #predict_fn = lambda x: model['training_model'].predict_proba(x)
+            pred = exp.explain_instance(input_df.values[0], predict(model, input_df), num_features = 6)
 
-        # WORKING ON REASON PLOT
-        explainer = shap.TreeExplainer(model)
-        shap_values = explainer.shap_values(data)
+            # WORKING ON REASON PLOT
 
-        st.write(shap.force_plot(explainer.expected_value, shap_values[0,:], input_df.iloc[0,:]), unsafe_allow_html=True)
-        # NEED REASON PLOT HERE
+            components.html(exp.as_html(), height=800)
+            # NEED REASON PLOT HERE
 
     # Batch prediction (multiple people to predict)
     if add_selectbox == "Multi":
