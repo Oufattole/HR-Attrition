@@ -4,19 +4,28 @@ import streamlit.components.v1 as components
 import pandas as pd
 import numpy as np
 import joblib
-from lime.lime_tabular import LimeTabularExplainer
+import shap
+import lime 
+from lime import lime_tabular
 
-model = joblib.load('rf_model.pkl')
-a = pd.read_csv("data.csv") 
-print(a.head())
+model = load_model('gbc_model')
+prep = joblib.load("prep_pipe.pkl")
 
-def predict(model, input_df):
+train_data = pd.read_csv("data.csv") 
+
+def get_preprocessed_data(model, input_df):
     """
-    Make prediction using model loaded earlier
+    Get prediction related columns i.e. Label (the prediction) and the probabilty of the prediction
+
+    Preprocesses the data using the preprocessing steps used during training
     """
     predictions_df = predict_model(estimator = model, data = input_df)
-    predictions = predictions_df['Label'][0]
-    return predictions
+    return predictions_df
+
+
+def st_shap(plot, height=None):
+    shap_html = f"<head>{shap.getjs()}</head><body>{plot}</body>"
+    components.html(shap_html, height=height)
 
 def run():
 
@@ -115,19 +124,39 @@ def run():
  
         # Make single prediction for data input using the model
         if st.button("Predict"):
-            output = predict(model = model, input_df = input_df)
+
+            prediction_df = get_preprocessed_data(model = model, input_df = input_df)
+            prediction_df.rename(columns = {"Label" : "Attrition"}, inplace = True)
+            prediction_df.drop(columns = "Score", inplace = True)
+
+            output = prediction_df['Attrition'][0]
 
             # Output of the prediction
             st.success('{} this person will leave.'.format(output))
 
-            exp = LimeTabularExplainer(a.values, feature_names= a.columns.tolist())
-            #predict_fn = lambda x: model['training_model'].predict_proba(x)
-            pred = exp.explain_instance(input_df.values[0], predict(model, input_df), num_features = 6)
+            # Add columns that need to be ignored
+            #prediction_df['EmployeeNumber'] = 0
+            #prediction_df['StandardHours'] = 1
+            #prediction_df['EmployeeCount'] = 1
 
-            # WORKING ON REASON PLOT
+            test_shap = prep.transform(prediction_df)
 
-            components.html(exp.as_html(), height=800)
-            # NEED REASON PLOT HERE
+            lime_explainer = lime_tabular.LimeTabularExplainer(
+                training_data = train_data.to_numpy(),
+                feature_names = train_data.columns,
+                class_names = ['No', 'Yes'],
+                mode = 'classification', 
+            )
+            print(lime_explainer)
+            print(test_shap)
+            print(test_shap.to_numpy()[0])
+
+            lime_exp = lime_explainer.explain_instance(
+                data_row = test_shap.to_numpy()[0],
+                predict_fn = model['trained_model'].predict_proba
+            )
+            st.pyplot(lime_exp.as_pyplot_figure())
+            st_shap(lime_exp.as_html(), height = 2000)
 
     # Batch prediction (multiple people to predict)
     if add_selectbox == "Multi":
