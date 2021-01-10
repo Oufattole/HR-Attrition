@@ -5,27 +5,32 @@ import pandas as pd
 import numpy as np
 import joblib
 import shap
-import lime 
 from lime import lime_tabular
 
-model = load_model('gbc_model')
-prep = joblib.load("prep_pipe.pkl")
+# IMPORT/LOAD
+gbc = load_model('models/gbc_model') # GBC model
+prep_pipe = joblib.load("prep_pipe.pkl") # Pycaret preparation pipeline
+train_data = pd.read_csv("data/preprocessed_data.csv") # Preprocessed data used in training
 
-train_data = pd.read_csv("data.csv") 
-
-def get_preprocessed_data(model, input_df):
+def get_prediction_df(input_df, model):
     """
-    Get prediction related columns i.e. Label (the prediction) and the probabilty of the prediction
-
-    Preprocesses the data using the preprocessing steps used during training
+    Get prediction using the gbc model
     """
     predictions_df = predict_model(estimator = model, data = input_df)
     return predictions_df
 
+def process_using_pipeline(input_df, pipe):
+    """
+    Process the data using the Pycaret pipeline
+    """
+    return pipe.transform(input_df)
 
-def st_shap(plot, height=None):
-    shap_html = f"<head>{shap.getjs()}</head><body>{plot}</body>"
-    components.html(shap_html, height=height)
+def st_explanation(plot, height=None):
+    """
+    Plot the explanation within the streamlit app
+    """
+    html = f"<head>{shap.getjs()}</head><body>{plot}</body>"
+    components.html(html, height = height)
 
 def run():
 
@@ -125,38 +130,40 @@ def run():
         # Make single prediction for data input using the model
         if st.button("Predict"):
 
-            prediction_df = get_preprocessed_data(model = model, input_df = input_df)
-            prediction_df.rename(columns = {"Label" : "Attrition"}, inplace = True)
-            prediction_df.drop(columns = "Score", inplace = True)
+            # Get the prediction and score (takes the original dataframe and adds it on)
+            prediction_df = get_prediction_df(input_df, gbc)
 
-            output = prediction_df['Attrition'][0]
+            # Grab the prediction label
+            prediction_label = prediction_df['Label'][0]
 
-            # Output of the prediction
-            st.success('{} this person will leave.'.format(output))
+            # Output of the prediction i.e. Yes/No
+            st.success('{} this person will leave.'.format(prediction_label))
 
             # Add columns that need to be ignored
             #prediction_df['EmployeeNumber'] = 0
             #prediction_df['StandardHours'] = 1
             #prediction_df['EmployeeCount'] = 1
 
-            test_shap = prep.transform(prediction_df)
+            # Process the inputed row using the Pycaret pipeline
+            new_processed = process_using_pipeline(prediction_df, prep_pipe)
 
+            # Create lime explainer
             lime_explainer = lime_tabular.LimeTabularExplainer(
                 training_data = train_data.to_numpy(),
                 feature_names = train_data.columns,
                 class_names = ['No', 'Yes'],
                 mode = 'classification', 
             )
-            print(lime_explainer)
-            print(test_shap)
-            print(test_shap.to_numpy()[0])
 
+            # Get explanation of new value
             lime_exp = lime_explainer.explain_instance(
-                data_row = test_shap.to_numpy()[0],
-                predict_fn = model['trained_model'].predict_proba
+                data_row = new_processed.to_numpy()[0],
+                predict_fn = gbc['trained_model'].predict_proba
             )
+
+            # Plots (currently looking at similar plots, will change)
             st.pyplot(lime_exp.as_pyplot_figure())
-            st_shap(lime_exp.as_html(), height = 2000)
+            st_explanation(lime_exp.as_html(), height = 2000)
 
     # Batch prediction (multiple people to predict)
     if add_selectbox == "Multi":
@@ -167,7 +174,7 @@ def run():
         # Make prediction and output data
         if file_upload is not None:
             data = pd.read_csv(file_upload)
-            predictions = predict_model(estimator = model, data = data)
+            predictions = predict_model(estimator = gbc, data = data)
             st.write(predictions)
 
 if __name__ == '__main__':
