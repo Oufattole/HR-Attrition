@@ -1,0 +1,332 @@
+2021-01-10 20:06:23,793:INFO:Initializing load_model()
+2021-01-10 20:06:23,797:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:08:33,585:INFO:Initializing load_model()
+2021-01-10 20:08:33,589:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:10:53,240:INFO:Initializing load_model()
+2021-01-10 20:10:53,240:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:20:41,672:INFO:Initializing load_model()
+2021-01-10 20:20:41,672:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:22:00,351:INFO:Initializing load_model()
+2021-01-10 20:22:00,352:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:26:26,035:INFO:Initializing load_model()
+2021-01-10 20:26:26,035:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:26:55,164:INFO:Initializing load_model()
+2021-01-10 20:26:55,164:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:27:30,764:INFO:Initializing load_model()
+2021-01-10 20:27:30,764:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:27:50,118:INFO:Initializing load_model()
+2021-01-10 20:27:50,119:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:28:55,213:INFO:Initializing load_model()
+2021-01-10 20:28:55,213:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:30:17,478:INFO:Initializing load_model()
+2021-01-10 20:30:17,478:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:32:37,109:INFO:Initializing load_model()
+2021-01-10 20:32:37,109:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:32:43,793:INFO:Initializing load_model()
+2021-01-10 20:32:43,793:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:32:44,003:INFO:Initializing predict_model()
+2021-01-10 20:32:44,003:INFO:predict_model(estimator=Pipeline(steps=[('dtypes',
+                 DataTypes_Auto_infer(categorical_features=['BusinessTravel',
+                                                            'Department',
+                                                            'EducationField',
+                                                            'JobRole', 'Gender',
+                                                            'JobLevel',
+                                                            'JobRole', 'Over18',
+                                                            'MaritalStatus',
+                                                            'OverTime',
+                                                            'WorkLifeBalance'],
+                                      display_types=False,
+                                      features_todrop=['EmployeeNumber',
+                                                       'StandardHours',
+                                                       'EmployeeCount'],
+                                      ml_usecase='classification',
+                                      numerical_features=['Dis...
+                ('binn', 'passthrough'), ('rem_outliers', 'passthrough'),
+                ('cluster_all', 'passthrough'),
+                ('dummy', Dummify(target='Attrition')),
+                ('fix_perfect', Remove_100(target='Attrition')),
+                ('clean_names', Clean_Colum_Names()),
+                ('feature_select', 'passthrough'), ('fix_multi', 'passthrough'),
+                ('dfs', 'passthrough'), ('pca', 'passthrough'),
+                ['trained_model',
+                 GradientBoostingClassifier(random_state=5962)]]), probability_threshold=None, encoded_labels=False, round=4, verbose=True, ml_usecase=MLUsecase.CLASSIFICATION, display=None)
+2021-01-10 20:32:44,061:INFO:Checking exceptions
+2021-01-10 20:32:44,063:INFO:Preloading libraries
+2021-01-10 20:58:22,313:INFO:Initializing load_model()
+2021-01-10 20:58:22,313:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 20:58:22,594:INFO:Initializing predict_model()
+2021-01-10 20:58:22,601:INFO:predict_model(estimator=Pipeline(steps=[('dtypes',
+                 DataTypes_Auto_infer(categorical_features=['BusinessTravel',
+                                                            'Department',
+                                                            'EducationField',
+                                                            'JobRole', 'Gender',
+                                                            'JobLevel',
+                                                            'JobRole', 'Over18',
+                                                            'MaritalStatus',
+                                                            'OverTime',
+                                                            'WorkLifeBalance'],
+                                      display_types=False,
+                                      features_todrop=['EmployeeNumber',
+                                                       'StandardHours',
+                                                       'EmployeeCount'],
+                                      ml_usecase='classification',
+                                      numerical_features=['Dis...
+                ('binn', 'passthrough'), ('rem_outliers', 'passthrough'),
+                ('cluster_all', 'passthrough'),
+                ('dummy', Dummify(target='Attrition')),
+                ('fix_perfect', Remove_100(target='Attrition')),
+                ('clean_names', Clean_Colum_Names()),
+                ('feature_select', 'passthrough'), ('fix_multi', 'passthrough'),
+                ('dfs', 'passthrough'), ('pca', 'passthrough'),
+                ['trained_model',
+                 GradientBoostingClassifier(random_state=5962)]]), probability_threshold=None, encoded_labels=False, round=4, verbose=True, ml_usecase=MLUsecase.CLASSIFICATION, display=None)
+2021-01-10 20:58:22,634:INFO:Checking exceptions
+2021-01-10 20:58:22,636:INFO:Preloading libraries
+2021-01-10 21:00:24,510:INFO:Initializing load_model()
+2021-01-10 21:00:24,510:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 21:01:45,045:INFO:Initializing load_model()
+2021-01-10 21:01:45,045:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 21:02:05,764:INFO:Initializing load_model()
+2021-01-10 21:02:05,767:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 21:02:09,804:INFO:Initializing load_model()
+2021-01-10 21:02:09,809:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 21:02:09,964:INFO:Initializing predict_model()
+2021-01-10 21:02:09,975:INFO:predict_model(estimator=Pipeline(steps=[('dtypes',
+                 DataTypes_Auto_infer(categorical_features=['BusinessTravel',
+                                                            'Department',
+                                                            'EducationField',
+                                                            'JobRole', 'Gender',
+                                                            'JobLevel',
+                                                            'JobRole', 'Over18',
+                                                            'MaritalStatus',
+                                                            'OverTime',
+                                                            'WorkLifeBalance'],
+                                      display_types=False,
+                                      features_todrop=['EmployeeNumber',
+                                                       'StandardHours',
+                                                       'EmployeeCount'],
+                                      ml_usecase='classification',
+                                      numerical_features=['Dis...
+                ('binn', 'passthrough'), ('rem_outliers', 'passthrough'),
+                ('cluster_all', 'passthrough'),
+                ('dummy', Dummify(target='Attrition')),
+                ('fix_perfect', Remove_100(target='Attrition')),
+                ('clean_names', Clean_Colum_Names()),
+                ('feature_select', 'passthrough'), ('fix_multi', 'passthrough'),
+                ('dfs', 'passthrough'), ('pca', 'passthrough'),
+                ['trained_model',
+                 GradientBoostingClassifier(random_state=5962)]]), probability_threshold=None, encoded_labels=False, round=4, verbose=True, ml_usecase=MLUsecase.CLASSIFICATION, display=None)
+2021-01-10 21:02:10,114:INFO:Checking exceptions
+2021-01-10 21:02:10,117:INFO:Preloading libraries
+2021-01-10 21:03:36,473:INFO:Initializing load_model()
+2021-01-10 21:03:36,473:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 21:03:36,673:INFO:Initializing predict_model()
+2021-01-10 21:03:36,675:INFO:predict_model(estimator=Pipeline(steps=[('dtypes',
+                 DataTypes_Auto_infer(categorical_features=['BusinessTravel',
+                                                            'Department',
+                                                            'EducationField',
+                                                            'JobRole', 'Gender',
+                                                            'JobLevel',
+                                                            'JobRole', 'Over18',
+                                                            'MaritalStatus',
+                                                            'OverTime',
+                                                            'WorkLifeBalance'],
+                                      display_types=False,
+                                      features_todrop=['EmployeeNumber',
+                                                       'StandardHours',
+                                                       'EmployeeCount'],
+                                      ml_usecase='classification',
+                                      numerical_features=['Dis...
+                ('binn', 'passthrough'), ('rem_outliers', 'passthrough'),
+                ('cluster_all', 'passthrough'),
+                ('dummy', Dummify(target='Attrition')),
+                ('fix_perfect', Remove_100(target='Attrition')),
+                ('clean_names', Clean_Colum_Names()),
+                ('feature_select', 'passthrough'), ('fix_multi', 'passthrough'),
+                ('dfs', 'passthrough'), ('pca', 'passthrough'),
+                ['trained_model',
+                 GradientBoostingClassifier(random_state=5962)]]), probability_threshold=None, encoded_labels=False, round=4, verbose=True, ml_usecase=MLUsecase.CLASSIFICATION, display=None)
+2021-01-10 21:03:36,690:INFO:Checking exceptions
+2021-01-10 21:03:36,708:INFO:Preloading libraries
+2021-01-10 21:04:01,543:INFO:Initializing load_model()
+2021-01-10 21:04:01,553:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 21:04:01,723:INFO:Initializing predict_model()
+2021-01-10 21:04:01,723:INFO:predict_model(estimator=Pipeline(steps=[('dtypes',
+                 DataTypes_Auto_infer(categorical_features=['BusinessTravel',
+                                                            'Department',
+                                                            'EducationField',
+                                                            'JobRole', 'Gender',
+                                                            'JobLevel',
+                                                            'JobRole', 'Over18',
+                                                            'MaritalStatus',
+                                                            'OverTime',
+                                                            'WorkLifeBalance'],
+                                      display_types=False,
+                                      features_todrop=['EmployeeNumber',
+                                                       'StandardHours',
+                                                       'EmployeeCount'],
+                                      ml_usecase='classification',
+                                      numerical_features=['Dis...
+                ('binn', 'passthrough'), ('rem_outliers', 'passthrough'),
+                ('cluster_all', 'passthrough'),
+                ('dummy', Dummify(target='Attrition')),
+                ('fix_perfect', Remove_100(target='Attrition')),
+                ('clean_names', Clean_Colum_Names()),
+                ('feature_select', 'passthrough'), ('fix_multi', 'passthrough'),
+                ('dfs', 'passthrough'), ('pca', 'passthrough'),
+                ['trained_model',
+                 GradientBoostingClassifier(random_state=5962)]]), probability_threshold=None, encoded_labels=False, round=4, verbose=True, ml_usecase=MLUsecase.CLASSIFICATION, display=None)
+2021-01-10 21:04:01,793:INFO:Checking exceptions
+2021-01-10 21:04:01,796:INFO:Preloading libraries
+2021-01-10 21:06:00,261:INFO:Initializing load_model()
+2021-01-10 21:06:00,271:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 21:06:00,461:INFO:Initializing predict_model()
+2021-01-10 21:06:00,471:INFO:predict_model(estimator=Pipeline(steps=[('dtypes',
+                 DataTypes_Auto_infer(categorical_features=['BusinessTravel',
+                                                            'Department',
+                                                            'EducationField',
+                                                            'JobRole', 'Gender',
+                                                            'JobLevel',
+                                                            'JobRole', 'Over18',
+                                                            'MaritalStatus',
+                                                            'OverTime',
+                                                            'WorkLifeBalance'],
+                                      display_types=False,
+                                      features_todrop=['EmployeeNumber',
+                                                       'StandardHours',
+                                                       'EmployeeCount'],
+                                      ml_usecase='classification',
+                                      numerical_features=['Dis...
+                ('binn', 'passthrough'), ('rem_outliers', 'passthrough'),
+                ('cluster_all', 'passthrough'),
+                ('dummy', Dummify(target='Attrition')),
+                ('fix_perfect', Remove_100(target='Attrition')),
+                ('clean_names', Clean_Colum_Names()),
+                ('feature_select', 'passthrough'), ('fix_multi', 'passthrough'),
+                ('dfs', 'passthrough'), ('pca', 'passthrough'),
+                ['trained_model',
+                 GradientBoostingClassifier(random_state=5962)]]), probability_threshold=None, encoded_labels=False, round=4, verbose=True, ml_usecase=MLUsecase.CLASSIFICATION, display=None)
+2021-01-10 21:06:00,508:INFO:Checking exceptions
+2021-01-10 21:06:00,520:INFO:Preloading libraries
+2021-01-10 21:09:45,532:INFO:Initializing load_model()
+2021-01-10 21:09:45,556:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 21:09:45,862:INFO:Initializing predict_model()
+2021-01-10 21:09:45,862:INFO:predict_model(estimator=Pipeline(steps=[('dtypes',
+                 DataTypes_Auto_infer(categorical_features=['BusinessTravel',
+                                                            'Department',
+                                                            'EducationField',
+                                                            'JobRole', 'Gender',
+                                                            'JobLevel',
+                                                            'JobRole', 'Over18',
+                                                            'MaritalStatus',
+                                                            'OverTime',
+                                                            'WorkLifeBalance'],
+                                      display_types=False,
+                                      features_todrop=['EmployeeNumber',
+                                                       'StandardHours',
+                                                       'EmployeeCount'],
+                                      ml_usecase='classification',
+                                      numerical_features=['Dis...
+                ('binn', 'passthrough'), ('rem_outliers', 'passthrough'),
+                ('cluster_all', 'passthrough'),
+                ('dummy', Dummify(target='Attrition')),
+                ('fix_perfect', Remove_100(target='Attrition')),
+                ('clean_names', Clean_Colum_Names()),
+                ('feature_select', 'passthrough'), ('fix_multi', 'passthrough'),
+                ('dfs', 'passthrough'), ('pca', 'passthrough'),
+                ['trained_model',
+                 GradientBoostingClassifier(random_state=5962)]]), probability_threshold=None, encoded_labels=False, round=4, verbose=True, ml_usecase=MLUsecase.CLASSIFICATION, display=None)
+2021-01-10 21:09:45,905:INFO:Checking exceptions
+2021-01-10 21:09:45,907:INFO:Preloading libraries
+2021-01-10 21:11:06,431:INFO:Initializing load_model()
+2021-01-10 21:11:06,437:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 21:11:06,651:INFO:Initializing predict_model()
+2021-01-10 21:11:06,653:INFO:predict_model(estimator=Pipeline(steps=[('dtypes',
+                 DataTypes_Auto_infer(categorical_features=['BusinessTravel',
+                                                            'Department',
+                                                            'EducationField',
+                                                            'JobRole', 'Gender',
+                                                            'JobLevel',
+                                                            'JobRole', 'Over18',
+                                                            'MaritalStatus',
+                                                            'OverTime',
+                                                            'WorkLifeBalance'],
+                                      display_types=False,
+                                      features_todrop=['EmployeeNumber',
+                                                       'StandardHours',
+                                                       'EmployeeCount'],
+                                      ml_usecase='classification',
+                                      numerical_features=['Dis...
+                ('binn', 'passthrough'), ('rem_outliers', 'passthrough'),
+                ('cluster_all', 'passthrough'),
+                ('dummy', Dummify(target='Attrition')),
+                ('fix_perfect', Remove_100(target='Attrition')),
+                ('clean_names', Clean_Colum_Names()),
+                ('feature_select', 'passthrough'), ('fix_multi', 'passthrough'),
+                ('dfs', 'passthrough'), ('pca', 'passthrough'),
+                ['trained_model',
+                 GradientBoostingClassifier(random_state=5962)]]), probability_threshold=None, encoded_labels=False, round=4, verbose=True, ml_usecase=MLUsecase.CLASSIFICATION, display=None)
+2021-01-10 21:11:06,691:INFO:Checking exceptions
+2021-01-10 21:11:06,709:INFO:Preloading libraries
+2021-01-10 21:12:02,650:INFO:Initializing load_model()
+2021-01-10 21:12:02,665:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-10 21:12:02,890:INFO:Initializing predict_model()
+2021-01-10 21:12:02,890:INFO:predict_model(estimator=Pipeline(steps=[('dtypes',
+                 DataTypes_Auto_infer(categorical_features=['BusinessTravel',
+                                                            'Department',
+                                                            'EducationField',
+                                                            'JobRole', 'Gender',
+                                                            'JobLevel',
+                                                            'JobRole', 'Over18',
+                                                            'MaritalStatus',
+                                                            'OverTime',
+                                                            'WorkLifeBalance'],
+                                      display_types=False,
+                                      features_todrop=['EmployeeNumber',
+                                                       'StandardHours',
+                                                       'EmployeeCount'],
+                                      ml_usecase='classification',
+                                      numerical_features=['Dis...
+                ('binn', 'passthrough'), ('rem_outliers', 'passthrough'),
+                ('cluster_all', 'passthrough'),
+                ('dummy', Dummify(target='Attrition')),
+                ('fix_perfect', Remove_100(target='Attrition')),
+                ('clean_names', Clean_Colum_Names()),
+                ('feature_select', 'passthrough'), ('fix_multi', 'passthrough'),
+                ('dfs', 'passthrough'), ('pca', 'passthrough'),
+                ['trained_model',
+                 GradientBoostingClassifier(random_state=5962)]]), probability_threshold=None, encoded_labels=False, round=4, verbose=True, ml_usecase=MLUsecase.CLASSIFICATION, display=None)
+2021-01-10 21:12:02,929:INFO:Checking exceptions
+2021-01-10 21:12:02,929:INFO:Preloading libraries
+2021-01-11 08:37:05,650:INFO:Initializing load_model()
+2021-01-11 08:37:05,650:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-11 08:37:17,770:INFO:Initializing load_model()
+2021-01-11 08:37:17,770:INFO:load_model(model_name=models/gbc_model, platform=None, authentication=None, verbose=True)
+2021-01-11 08:37:17,980:INFO:Initializing predict_model()
+2021-01-11 08:37:17,992:INFO:predict_model(estimator=Pipeline(steps=[('dtypes',
+                 DataTypes_Auto_infer(categorical_features=['BusinessTravel',
+                                                            'Department',
+                                                            'EducationField',
+                                                            'JobRole', 'Gender',
+                                                            'JobLevel',
+                                                            'JobRole', 'Over18',
+                                                            'MaritalStatus',
+                                                            'OverTime',
+                                                            'WorkLifeBalance'],
+                                      display_types=False,
+                                      features_todrop=['EmployeeNumber',
+                                                       'StandardHours',
+                                                       'EmployeeCount'],
+                                      ml_usecase='classification',
+                                      numerical_features=['Dis...
+                ('binn', 'passthrough'), ('rem_outliers', 'passthrough'),
+                ('cluster_all', 'passthrough'),
+                ('dummy', Dummify(target='Attrition')),
+                ('fix_perfect', Remove_100(target='Attrition')),
+                ('clean_names', Clean_Colum_Names()),
+                ('feature_select', 'passthrough'), ('fix_multi', 'passthrough'),
+                ('dfs', 'passthrough'), ('pca', 'passthrough'),
+                ['trained_model',
+                 GradientBoostingClassifier(random_state=5962)]]), probability_threshold=None, encoded_labels=False, round=4, verbose=True, ml_usecase=MLUsecase.CLASSIFICATION, display=None)
+2021-01-11 08:37:18,032:INFO:Checking exceptions
+2021-01-11 08:37:18,033:INFO:Preloading libraries

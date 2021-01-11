@@ -11,6 +11,7 @@ from lime import lime_tabular
 gbc = load_model('models/gbc_model') # GBC model
 prep_pipe = joblib.load("prep_pipe.pkl") # Pycaret preparation pipeline
 train_data = pd.read_csv("data/preprocessed_data.csv") # Preprocessed data used in training
+original = pd.read_csv("data/HR Employee Attrition.csv").drop("Attrition", axis = 1)
 
 def get_prediction_df(input_df, model):
     """
@@ -29,7 +30,7 @@ def st_explanation(plot, height=None):
     """
     Plot the explanation within the streamlit app
     """
-    html = f"<head>{shap.getjs()}</head><body>{plot}</body>"
+    html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
     components.html(html, height = height)
 
 def run():
@@ -73,16 +74,16 @@ def run():
         with col3:
             MonthlyRate = st.number_input("MonthlyRate", min_value = 2000, max_value = 27000, step = 1)
             NumCompaniesWorked = st.slider("NumCompaniesWorked", min_value = 0, max_value = 9, step = 1)
-            Over18 = st.select_slider("Over18", options = ["N", "Y"])
+            #Over18 = st.select_slider("Over18", options = ["N", "Y"])
             OverTime = st.select_slider("OverTime", options = ["N", "Y"])
             PercentSalaryHike = st.number_input("PercentSalaryHike", min_value = 10, max_value = 25, step = 1)
             PerformanceRating = st.number_input("PerformanceRating", min_value = 3, max_value = 4, step = 1)
             RelationshipSatisfaction = st.select_slider("RelationshipSatisfaction", options = [1, 2, 3, 4])
             # StandardHours =
             StockOptionLevel = st.select_slider("StockOptionLevel", options = [0, 1, 2, 3])
+            TotalWorkingYears = st.slider("TotalWorkingYears", min_value = 0, max_value = 40, step = 1)
             
         with col4:
-            TotalWorkingYears = st.slider("TotalWorkingYears", min_value = 0, max_value = 40, step = 1)
             TrainingTimesLastYear = st.slider("TrainingTimesLastYear", min_value = 0, max_value = 6, step = 1)
             WorkLifeBalance = st.slider("WorkLifeBalance", min_value = 0, max_value = 4, step = 1)
             YearsAtCompany = st.slider("YearsAtCompany", min_value = 0, max_value = 40, step = 1)
@@ -110,7 +111,7 @@ def run():
                     "MonthlyIncome" :  MonthlyIncome ,
                     "MonthlyRate" :  MonthlyRate ,
                     "NumCompaniesWorked" :  NumCompaniesWorked ,
-                    "Over18" :  Over18 ,
+                    #"Over18" :  Over18 ,
                     "OverTime" :  OverTime ,
                     "PercentSalaryHike" :  PercentSalaryHike ,
                     "PerformanceRating" :  PerformanceRating ,
@@ -143,6 +144,7 @@ def run():
             #prediction_df['EmployeeNumber'] = 0
             #prediction_df['StandardHours'] = 1
             #prediction_df['EmployeeCount'] = 1
+            #prediction_df['Over18'] = "Y"
 
             # Process the inputed row using the Pycaret pipeline
             new_processed = process_using_pipeline(prediction_df, prep_pipe)
@@ -152,7 +154,7 @@ def run():
                 training_data = train_data.to_numpy(),
                 feature_names = train_data.columns,
                 class_names = ['No', 'Yes'],
-                mode = 'classification', 
+                mode = 'classification'
             )
 
             # Get explanation of new value
@@ -160,6 +162,15 @@ def run():
                 data_row = new_processed.to_numpy()[0],
                 predict_fn = gbc['trained_model'].predict_proba
             )
+
+            # Inverse transform
+            print(gbc.inverse_transform(train_data))
+
+            shap_k = shap.KernelExplainer(gbc['trained_model'].predict_proba, train_data)
+            shap_values = shap_k.shap_values(input_df, nsamples = 100)
+            print(shap_k)
+            print(shap_values)
+            st_explanation(shap.force_plot(shap_k.expected_value[0], shap_values[0], input_df))
 
             # Plots (currently looking at similar plots, will change)
             st.pyplot(lime_exp.as_pyplot_figure())
