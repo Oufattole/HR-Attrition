@@ -5,13 +5,18 @@ import pandas as pd
 import numpy as np
 import joblib
 import shap
+import lime
 from lime import lime_tabular
 
 # IMPORT/LOAD
 gbc = load_model('models/gbc_model') # GBC model
+final_gbc = load_model('models/final_gbc') # final GBC model
+
 prep_pipe = joblib.load("prep_pipe.pkl") # Pycaret preparation pipeline
+
 train_data = pd.read_csv("data/preprocessed_data.csv") # Preprocessed data used in training
-original = pd.read_csv("data/HR Employee Attrition.csv").drop("Attrition", axis = 1)
+original = pd.read_csv("data/HR Employee Attrition.csv")
+
 
 def get_prediction_df(input_df, model):
     """
@@ -31,6 +36,13 @@ def st_explanation(plot, height=None):
     Plot the explanation within the streamlit app
     """
     html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
+    components.html(html, height = height)
+
+def st_shap(plot, height=None):
+    """
+    Plot the explanation within the streamlit app
+    """
+    html = f"<head>{shap.getjs()}</head><body>{plot}</body>"
     components.html(html, height = height)
 
 def run():
@@ -132,7 +144,7 @@ def run():
         if st.button("Predict"):
 
             # Get the prediction and score (takes the original dataframe and adds it on)
-            prediction_df = get_prediction_df(input_df, gbc)
+            prediction_df = get_prediction_df(input_df, final_gbc)
 
             # Grab the prediction label
             prediction_label = prediction_df['Label'][0]
@@ -163,14 +175,23 @@ def run():
                 predict_fn = gbc['trained_model'].predict_proba
             )
 
-            # Inverse transform
-            print(gbc.inverse_transform(train_data))
+            #shap_k = shap.KernelExplainer(gbc['trained_model'].predict_proba, train_data)
+            #shap_values = shap_k.shap_values(new_processed, nsamples = 100)
 
-            shap_k = shap.KernelExplainer(gbc['trained_model'].predict_proba, train_data)
+            #print(len(shap_values[0][0]))
+            #print(len(train_data.columns))
+
+            shap_k = shap.KernelExplainer(final_gbc['trained_model'].predict_proba, original)
             shap_values = shap_k.shap_values(input_df, nsamples = 100)
-            print(shap_k)
-            print(shap_values)
-            st_explanation(shap.force_plot(shap_k.expected_value[0], shap_values[0], input_df))
+
+            highest_probability_label = 1
+
+            if shap_k.expected_value[0] > shap_k.expected_value[1]:
+                highest_probability_label = 0
+
+            st_explanation(shap.force_plot(shap_k.expected_value[highest_probability_label], 
+                                            shap_values[highest_probability_label], 
+                                            new_processed))
 
             # Plots (currently looking at similar plots, will change)
             st.pyplot(lime_exp.as_pyplot_figure())
