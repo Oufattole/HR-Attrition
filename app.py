@@ -10,9 +10,13 @@ from lime import lime_tabular
 
 # IMPORT/LOAD
 gbc = load_model('models/gbc_model') # GBC model
+final_gbc = load_model('models/final_gbc') # final GBC model
+
 prep_pipe = joblib.load("prep_pipe.pkl") # Pycaret preparation pipeline
+
 train_data = pd.read_csv("data/preprocessed_data.csv") # Preprocessed data used in training
-original = pd.read_csv("data/HR Employee Attrition.csv").drop("Attrition", axis = 1)
+original = pd.read_csv("data/HR Employee Attrition.csv")
+
 
 def get_prediction_df(input_df, model):
     """
@@ -140,7 +144,7 @@ def run():
         if st.button("Predict"):
 
             # Get the prediction and score (takes the original dataframe and adds it on)
-            prediction_df = get_prediction_df(input_df, gbc)
+            prediction_df = get_prediction_df(input_df, final_gbc)
 
             # Grab the prediction label
             prediction_label = prediction_df['Label'][0]
@@ -170,11 +174,15 @@ def run():
                 data_row = new_processed.to_numpy()[0],
                 predict_fn = gbc['trained_model'].predict_proba
             )
- 
 
+            #shap_k = shap.KernelExplainer(gbc['trained_model'].predict_proba, train_data)
+            #shap_values = shap_k.shap_values(new_processed, nsamples = 100)
 
-            shap_k = shap.KernelExplainer(gbc['trained_model'].predict_proba, train_data,)
-            shap_values = shap_k.shap_values(new_processed, nsamples = 100)
+            #print(len(shap_values[0][0]))
+            #print(len(train_data.columns))
+
+            shap_k = shap.KernelExplainer(final_gbc['trained_model'].predict_proba, original)
+            shap_values = shap_k.shap_values(input_df, nsamples = 100)
 
             highest_probability_label = 1
 
@@ -186,7 +194,7 @@ def run():
                                             new_processed))
 
             # Plots (currently looking at similar plots, will change)
-            #st.pyplot(lime_exp.as_pyplot_figure())
+            st.pyplot(lime_exp.as_pyplot_figure())
             st_explanation(lime_exp.as_html(), height = 2000)
 
     # Batch prediction (multiple people to predict)
