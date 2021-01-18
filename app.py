@@ -8,6 +8,7 @@ import shap
 import lime
 from lime import lime_tabular
 
+
 # IMPORT/LOAD
 gbc = load_model('models/gbc_model') # GBC model
 final_gbc = load_model('models/final_gbc') # final GBC model
@@ -16,6 +17,29 @@ prep_pipe = joblib.load("prep_pipe.pkl") # Pycaret preparation pipeline
 
 train_data = pd.read_csv("data/preprocessed_data.csv") # Preprocessed data used in training
 original = pd.read_csv("data/HR Employee Attrition.csv")
+
+def combine_shap(shap_values, name, mask):
+
+    sv = shap.Explanation(shap_values, feature_names = train_data.columns)
+    print(shap_values.data)
+    mask_col_names = np.array(train_data.columns)[mask]
+
+    new_data = mask_col_names[
+            (shap_values.data[:, mask]*np.arange(sum(mask))).sum(axis=1).astype(int)
+        ]
+    sv.data = np.concatenate([
+        shap_values.data[:, ~mask],
+        new_data.reshape(-1,1)
+    ], axis=1)
+
+    new_values = shap_values.values[:, mask].sum(axis=1)
+    sv.values = np.concatenate([
+        shap_values.values[:, ~mask],
+        new_values.reshape(-1,1)
+    ], axis=1)
+    sv.feature_names = list(np.array(shap_values.feature_names)[~mask]) + [name]
+    print(sv.data.shape)
+    return sv
 
 
 def get_prediction_df(input_df, model):
@@ -162,18 +186,18 @@ def run():
             new_processed = process_using_pipeline(prediction_df, prep_pipe)
 
             # Create lime explainer
-            lime_explainer = lime_tabular.LimeTabularExplainer(
-                training_data = train_data.to_numpy(),
-                feature_names = train_data.columns,
-                class_names = ['No', 'Yes'],
-                mode = 'classification'
-            )
+            #lime_explainer = lime_tabular.LimeTabularExplainer(
+            #    training_data = train_data.to_numpy(),
+            #    feature_names = train_data.columns,
+            #    class_names = ['No', 'Yes'],
+            #    mode = 'classification'
+            #)
 
             # Get explanation of new value
-            lime_exp = lime_explainer.explain_instance(
-                data_row = new_processed.to_numpy()[0],
-                predict_fn = gbc['trained_model'].predict_proba
-            )
+            #lime_exp = lime_explainer.explain_instance(
+            #    data_row = new_processed.to_numpy()[0],
+            #    predict_fn = gbc['trained_model'].predict_proba
+            #)
 
             #shap_k = shap.KernelExplainer(gbc['trained_model'].predict_proba, train_data)
             #shap_values = shap_k.shap_values(new_processed, nsamples = 100)
@@ -181,8 +205,12 @@ def run():
             #print(len(shap_values[0][0]))
             #print(len(train_data.columns))
 
-            shap_k = shap.KernelExplainer(final_gbc['trained_model'].predict_proba, original)
-            shap_values = shap_k.shap_values(input_df, nsamples = 100)
+            shap_k = shap.KernelExplainer(final_gbc['trained_model'].predict_proba, train_data)
+            shap_values = shap_k.shap_values(new_processed, nsamples = 100)
+
+
+            sv = combine_shap(shap_values[0], 'BusinessTravel', new_processed.columns.str.contains("BusinessTravel"))
+            print(sv)
 
             highest_probability_label = 1
 
