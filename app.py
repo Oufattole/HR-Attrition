@@ -18,29 +18,6 @@ prep_pipe = joblib.load("prep_pipe.pkl") # Pycaret preparation pipeline
 train_data = pd.read_csv("data/preprocessed_data.csv") # Preprocessed data used in training
 original = pd.read_csv("data/HR Employee Attrition.csv")
 
-def combine_shap(shap_values, name, mask):
-
-    sv = shap.Explanation(shap_values, feature_names = train_data.columns)
-    print(shap_values.data)
-    mask_col_names = np.array(train_data.columns)[mask]
-
-    new_data = mask_col_names[
-            (shap_values.data[:, mask]*np.arange(sum(mask))).sum(axis=1).astype(int)
-        ]
-    sv.data = np.concatenate([
-        shap_values.data[:, ~mask],
-        new_data.reshape(-1,1)
-    ], axis=1)
-
-    new_values = shap_values.values[:, mask].sum(axis=1)
-    sv.values = np.concatenate([
-        shap_values.values[:, ~mask],
-        new_values.reshape(-1,1)
-    ], axis=1)
-    sv.feature_names = list(np.array(shap_values.feature_names)[~mask]) + [name]
-    print(sv.data.shape)
-    return sv
-
 
 def get_prediction_df(input_df, model):
     """
@@ -176,54 +153,40 @@ def run():
             # Output of the prediction i.e. Yes/No
             st.success('{} this person will leave.'.format(prediction_label))
 
-            # Add columns that need to be ignored
-            #prediction_df['EmployeeNumber'] = 0
-            #prediction_df['StandardHours'] = 1
-            #prediction_df['EmployeeCount'] = 1
-            #prediction_df['Over18'] = "Y"
-
-            # Process the inputed row using the Pycaret pipeline
+            # Preprocess the inputted data
             new_processed = process_using_pipeline(prediction_df, prep_pipe)
 
-            # Create lime explainer
-            #lime_explainer = lime_tabular.LimeTabularExplainer(
-            #    training_data = train_data.to_numpy(),
-            #    feature_names = train_data.columns,
-            #    class_names = ['No', 'Yes'],
-            #    mode = 'classification'
-            #)
+            # Create shap tree explainer
+            test = shap.TreeExplainer(final_gbc['trained_model'], data = train_data, model_output = "probability")
 
-            # Get explanation of new value
-            #lime_exp = lime_explainer.explain_instance(
-            #    data_row = new_processed.to_numpy()[0],
-            #    predict_fn = gbc['trained_model'].predict_proba
-            #)
+            # Get shap values for new data
+            sv = test.shap_values(new_processed.iloc[0])
 
-            #shap_k = shap.KernelExplainer(gbc['trained_model'].predict_proba, train_data)
-            #shap_values = shap_k.shap_values(new_processed, nsamples = 100)
+            
+            summary_df = pd.DataFrame([train_data.columns, sv]).T
+            summary_df.columns = ['feature', 'shap_value']
 
-            #print(len(shap_values[0][0]))
-            #print(len(train_data.columns))
+            mapping = {}
 
-            shap_k = shap.KernelExplainer(final_gbc['trained_model'].predict_proba, train_data)
-            shap_values = shap_k.shap_values(new_processed, nsamples = 100)
+            for feature in summary_df.feature.values:
+                mapping[feature] = feature
+                for prefix, alternative in zip(['BusinessTravel', 'Department', 'EducationField', 'Gender', 'JobLevel', 'JobRole', 'MaritalStatus', 'OverTime'],
+                                            ['BusinessTravel', 'Department', 'EducationField', 'Gender', 'JobLevel', 'JobRole', 'MaritalStatus', 'OverTime']):
+                    if feature.startswith(prefix):
+                        mapping[feature] = alternative
+                        break
 
+            summary_df['feature'] = summary_df.feature.map(mapping)
 
-            sv = combine_shap(shap_values[0], 'BusinessTravel', new_processed.columns.str.contains("BusinessTravel"))
-            print(sv)
+            shap_df = summary_df.groupby('feature').sum().reset_index()
 
-            highest_probability_label = 1
+            # Plot the inputted data's shap plot
+            st_explanation(shap.force_plot(base_value = test.expected_value,
+                                            shap_values = shap_df.shap_value.values,
+                                            features = input_df,
+                                            feature_names = list(original.drop(["EmployeeNumber", "StandardHours", "EmployeeCount", "Over18", "Attrition"], axis = 1).columns),
+                                            text_rotation = 180))
 
-            if shap_k.expected_value[0] > shap_k.expected_value[1]:
-                highest_probability_label = 0
-
-            st_explanation(shap.force_plot(shap_k.expected_value[highest_probability_label], 
-                                            shap_values[highest_probability_label], 
-                                            new_processed))
-
-            # Plots (currently looking at similar plots, will change)
-            st.pyplot(lime_exp.as_pyplot_figure())
-            st_explanation(lime_exp.as_html(), height = 2000)
 
     # Batch prediction (multiple people to predict)
     if add_selectbox == "Multi":
