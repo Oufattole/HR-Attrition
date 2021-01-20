@@ -13,6 +13,17 @@ Note: There is a lot of discussion about ML, DL and AI replacing jobs, this does
 * 💁**Employees** - employees at risk of leaving the company will likely have a reason to leave e.g. working overtime often. Some may be on the fence about leaving and if the model can capture it early through using the inputs such as working overtime often this can be resolved. If the model can then be interpretted (using SHAP values) then HR can use the reasons to approach the employee and discuss these pain points that weren't necessarily obvious before. The employee will hopefully stay and have a better work environment and their talent retained.
 * 🏭**Company** - there may be key members within a team that bring substantial value to their teams. If they were to leave then the company will potentially lose their value and may slow or lose progress from the employee's value and skills they bring. If the model captures them early, HR realise it and approach them with a personal discussion, they can potential "save" this employee from leaving and retain the value and skills they bring.
 
+## Interesting performance improvement incorporating synthetic data
+* AUC 0.85 -> 0.95
+* Precision 0.73 -> 0.92
+* Recall 0.42 -> 0.84
+
+| Metric      | w/o generated data | w/ generated data | 
+| ----------- | ------------------ | ----------------- |
+|   AUC       |        0.85        |       0.95        |
+| Precision   |        0.73        |       0.92        |
+| Recall      |        0.42        |       0.84        |
+
 ## Streamlit app
 The final model was used as an experiment using `streamlit` to create a user based app. The app is split into two sections...
 1. 1️⃣**Single prediction** - the user manually inputs values of an employee and finds out what the model predicts BUT it also includes a **reason plot** (highlighting what features contribute towards/away from the predicted value) using shap values.
