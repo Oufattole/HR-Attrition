@@ -192,8 +192,15 @@ def run():
             # Grab the prediction label
             prediction_label = prediction_df['Label'][0]
 
+            output_string = ""
+
+            if prediction_label == "Yes":
+                output_string = "Yes, this person will leave in the next 6 months, here's why..."
+            else:
+                output_string = "No, this person will not leave in the next 6 months, here's why..."
+
             # Output of the prediction i.e. Yes/No
-            st.success('{} this person will leave.'.format(prediction_label))
+            st.success(output_string)
 
             # Preprocess the inputted data
             new_processed = process_using_pipeline(prediction_df, prep_pipe)
