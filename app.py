@@ -8,13 +8,13 @@ import shap
 
 # IMPORT/LOAD
 ## FINALIZED MODEL
-final_gbc = load_model('models/final_gbc') 
+final_gbc = load_model('models/final_gbc')
 
 ## PYCARET PIPELINE
 prep_pipe = joblib.load("prep_pipe.pkl")
 
 # DATA
-train_data = pd.read_csv("data/preprocessed_data.csv") 
+train_data = pd.read_csv("data/preprocessed_data.csv")
 original = pd.read_csv("data/HR Employee Attrition.csv")
 
 
@@ -58,11 +58,13 @@ def handle_one_hot_encoding(processed_data, shap_values, ohe_features):
     Returns:
         pandas.DataFrame: dataframe with columns feature | shap_value
     """
+    # Format the shap values from the processed data (i.e. with OHE columns)
     summary_df = pd.DataFrame([processed_data.columns, shap_values]).T
     summary_df.columns = ['feature', 'shap_value']
 
     mapping = {}
 
+    # For each OHE column, "rename" it to it's prefix e.g. BusinessArea_x, BusinessArea_y becomes BusinessArea, BusinessArea
     for feature in summary_df.feature.values:
         mapping[feature] = feature
         for prefix, alternative in zip(ohe_features, ohe_features):
@@ -72,6 +74,7 @@ def handle_one_hot_encoding(processed_data, shap_values, ohe_features):
 
     summary_df['feature'] = summary_df.feature.map(mapping)
 
+    # Sum up the shap values of all columns named the same (google for info on why)
     shap_df = summary_df.groupby('feature').sum().reset_index()
 
     return shap_df
@@ -98,7 +101,7 @@ def run():
 
     # Title
     st.title("HR Attrition")
-    st.subheader("Using this app you can identify whether an employee(s) will potentially leave in the next six months and also why.")
+    st.subheader("Using this app you can identify whether an employee(s) will potentially leave in the next six months and also find out potential reasons why.")
 
     # Initialise columns
     col1, col2, col3, col4 = st.beta_columns(4)
@@ -108,28 +111,28 @@ def run():
 
         with col1:
             Age = st.number_input("Age", min_value = 18, max_value = 100, step = 1)
-            BusinessTravel = st.select_slider("BusinessTravel", options = ['Non-Travel', 'Travel_Rarely', 'Travel_Frequently'])
+            BusinessTravel = st.selectbox("BusinessTravel", options = ['Non-Travel', 'Travel_Rarely', 'Travel_Frequently'])
             DailyRate = st.number_input("DailyRate", min_value = 100, max_value = 1500, step = 1)
-            Department = st.select_slider("Department", options = ['Sales', 'Research & Development', 'Human Resources'])
+            Department = st.selectbox("Department", options = ['Sales', 'Research & Development', 'Human Resources'])
             DistanceFromHome = st.number_input("DistanceFromHome", min_value = 1, max_value = 30, step = 1)
             Education = st.select_slider("Education", options = [1, 2, 3, 4, 5])
-            EducationField = st.select_slider("EducationField", options = ['Life Sciences', 'Other', 'Medical', 'Marketing', 'Technical Degree', 'Human Resources'])
+            EducationField = st.selectbox("EducationField", options = ['Life Sciences', 'Other', 'Medical', 'Marketing', 'Technical Degree', 'Human Resources'])
             EnvironmentSatisfaction = st.select_slider("EnvironmentSatisfaction", options = [1, 2, 3, 4])
 
         with col2:
-            Gender = st.select_slider("Gender", options = ["Female", "Male"])
+            Gender = st.selectbox("Gender", options = ["Female", "Male"])
             HourlyRate = st.number_input("HourlyRate", min_value = 1, max_value = 100, step = 1)
             JobInvolvement = st.select_slider("JobInvolvement", options = [1, 2, 3, 4])
             JobLevel = st.select_slider("JobLevel", options = [1, 2, 3, 4, 5])
-            JobRole = st.select_slider("JobRole", options = ['Sales Executive', 'Research Scientist', 'Laboratory Technician', 'Manufacturing Director', 'Healthcare Representative', 'Manager', 'Sales Representative', 'Research Director', 'Human Resources'])
+            JobRole = st.selectbox("JobRole", options = ['Sales Executive', 'Research Scientist', 'Laboratory Technician', 'Manufacturing Director', 'Healthcare Representative', 'Manager', 'Sales Representative', 'Research Director', 'Human Resources'])
             JobSatisfaction = st.select_slider("JobSatisfaction", options = [1, 2, 3, 4])
-            MaritalStatus = st.select_slider("MaritalStatus", options = ['Single', 'Married', 'Divorced'])
+            MaritalStatus = st.selectbox("MaritalStatus", options = ['Single', 'Married', 'Divorced'])
             MonthlyIncome = st.number_input("MonthlyIncome", min_value = 1000, max_value = 20000, step = 1)
 
         with col3:
             MonthlyRate = st.number_input("MonthlyRate", min_value = 2000, max_value = 27000, step = 1)
             NumCompaniesWorked = st.slider("NumCompaniesWorked", min_value = 0, max_value = 9, step = 1)
-            OverTime = st.select_slider("OverTime", options = ["N", "Y"])
+            OverTime = st.selectbox("OverTime", options = ["N", "Y"])
             PercentSalaryHike = st.number_input("PercentSalaryHike", min_value = 10, max_value = 25, step = 1)
             PerformanceRating = st.number_input("PerformanceRating", min_value = 3, max_value = 4, step = 1)
             RelationshipSatisfaction = st.select_slider("RelationshipSatisfaction", options = [1, 2, 3, 4])
@@ -164,7 +167,6 @@ def run():
                     "MonthlyIncome" :  MonthlyIncome ,
                     "MonthlyRate" :  MonthlyRate ,
                     "NumCompaniesWorked" :  NumCompaniesWorked ,
-                    #"Over18" :  Over18 ,
                     "OverTime" :  OverTime ,
                     "PercentSalaryHike" :  PercentSalaryHike ,
                     "PerformanceRating" :  PerformanceRating ,
@@ -223,10 +225,10 @@ def run():
         # Upload rows to predict
         file_upload = st.file_uploader("Upload csv file for predictions", type = ["csv"])
 
-        # Make prediction and output data
+        # Load data, make prediction and output data
         if file_upload is not None:
             data = pd.read_csv(file_upload)
-            predictions = predict_model(estimator = gbc, data = data)
+            predictions = predict_model(estimator = final_gbc, data = data)
             st.write(predictions)
 
 if __name__ == '__main__':
