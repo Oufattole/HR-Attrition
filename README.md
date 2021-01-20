@@ -14,7 +14,7 @@ Note: There is a lot of discussion about ML, DL and AI replacing jobs, this does
 * 🏭**Company** - there may be key members within a team that bring substantial value to their teams. If they were to leave then the company will potentially lose their value and may slow or lose progress from the employee's value and skills they bring. If the model captures them early, HR realise it and approach them with a personal discussion, they can potential "save" this employee from leaving and retain the value and skills they bring.
 
 ## Streamlit app
-This was put together as an experiment as `streamlit` seems like a good way to quickly put together a ML app. The app is split into two sections...
+The final model was used as an experiment using `streamlit` to create a user based app. The app is split into two sections...
 1. 1️⃣**Single prediction** - the user manually inputs values of an employee and finds out what the model predicts BUT it also includes a **reason plot** (highlighting what features contribute towards/away from the predicted value) using shap values.
 ![Single prediction](https://github.com/Lion-Mod/HR-Attrition/blob/main/single_prediction.gif)
 
