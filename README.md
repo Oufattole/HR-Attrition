@@ -18,3 +18,4 @@ This was put together as an experiment as `streamlit` seems like a good way to q
 1. 1️⃣**Single prediction** - the user manually inputs values of an employee and finds out what the model predicts BUT it also includes a **reason plot** (highlighting what features contribute towards/away from the predicted value) using shap values.
 2. 1️⃣➕**Multi prediction** - upload a csv and get a dataframe back of the original data plus the **prediction** and **score**.
 
+![Single prediction](https://github.com/Lion-Mod/HR-Attrition/single_prediction.gif)
