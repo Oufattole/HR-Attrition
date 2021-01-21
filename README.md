@@ -4,7 +4,7 @@ NOTE: the employee data is fake from [Kaggle](https://www.kaggle.com/pavansubhas
 Will they stay or will they go? Predicting whether employees will leave + why.
 
 ## Why this was done
-I haven't done any HR analytics before and the idea of encorporating ML/DL with this domain excites me. The main problem is acquiring HR data. Thankfully IBM has produced a **synthentic dataset which I am utilising**. The other one is given the problem ("Who will leave in the next 6 months?") there aren't many people who have left historically in the last 6 months which leads to an **imbalanced class problem**. How can this potentially be solved? **generate more data**.
+I haven't done any HR analytics before and the idea of encorporating ML/DL with this domain excites me. The main problem is acquiring HR data. Thankfully IBM has produced a **fake dataset which I am utilising**. The other one is given the problem ("Who will leave in the next 6 months?") there aren't many people who have left historically in the last 6 months which leads to an **imbalanced class problem**. How can this potentially be solved? **generate more data**.
 
 I feel that there are a lot of people within companies that add a ton of value to teams that may/may not go unnoticed and if they were to leave then progress within their teams could stall or worst case regress. If these individuals can be identified early and not just identified but understand WHY they might leave, that is the power of this.
 
