@@ -6,6 +6,10 @@ Will they stay or will they go? Predicting whether a fake dataset of employees w
 ## Why this was done
 I haven't done any HR analytics before and the idea of encorporating ML/DL with this domain interests me. The main problem is acquiring HR data. Thankfully IBM has produced a **fake dataset** that has been used throughout this project. The other one is given the problem ("Who will leave in the next 6 months?") there isn't a high percentage of people who have left historically in the last 6 months which leads to an **imbalanced class problem**. How can this potentially be solved? **generate more data**.
 
+I feel that there are a lot of people within companies that add a ton of value to teams that may/may not go unnoticed and if they were to leave then progress within their teams could stall or worst case regress. If these individuals can be identified early and not just identified but understand WHY they might leave, that is the power of this.
+
+Note: There is a lot of discussion about ML, DL and AI replacing jobs, this doesn't do so. I see the previously mentioned techniques allowing users to increase their productivity and in this particular use case, potentially saving employees leaving and improving the employees' work environment. If you had 3000 employees you could identify who might leave manually but not in a quick enough time nor efficiently. If you combine the knowledge of users and the model that is where this is powerful.
+
 
 ## Metric improvement incorporating synthetic data
 | Metric      | w/o generated data | w/ generated data | 
