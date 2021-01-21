@@ -1,10 +1,10 @@
 NOTE: the employee data is not real, it was generated and from [Kaggle](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset)
 
 # HR-Attrition 👔
-Will they stay or will they go? Predicting whether employees will leave + why.
+Will they stay or will they go? Predicting whether a fake dataset of employees will leave in the next 6 months.
 
 ## Why this was done
-I haven't done any HR analytics before and the idea of encorporating ML/DL with this domain excites me. The main problem is acquiring HR data. Thankfully IBM has produced a **fake dataset which I am utilising**. The other one is given the problem ("Who will leave in the next 6 months?") there aren't many people who have left historically in the last 6 months which leads to an **imbalanced class problem**. How can this potentially be solved? **generate more data**.
+I haven't done any HR analytics before and the idea of encorporating ML/DL with this domain excites me. The main problem is acquiring HR data. Thankfully IBM has produced a **fake dataset which I am utilising**. The other one is given the problem ("Who will leave in the next 6 months?") there isn't a high percentage of people who have left historically in the last 6 months which leads to an **imbalanced class problem**. How can this potentially be solved? **generate more data**.
 
 
 ## Metric improvement incorporating synthetic data
