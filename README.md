@@ -1,4 +1,4 @@
-NOTE: the employee data is not real, it was generated and from [Kaggle](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset)
+NOTE: the employee data is not real, it was generated and from this dataset from [Kaggle](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset)
 
 # HR-Attrition 👔
 Will they stay or will they go? Predicting whether a fake dataset of employees will leave in the next 6 months.
