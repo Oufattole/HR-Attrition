@@ -25,7 +25,7 @@ The final model was used as an experiment using `streamlit` to create a user bas
 1. 1️⃣**Single prediction** - the user manually inputs values of an employee and finds out what the model predicts BUT it also includes a **reason plot** (highlighting what features contribute towards/away from the predicted value) using shap values.
 ![Single prediction](https://github.com/Lion-Mod/HR-Attrition/blob/main/single_prediction.gif)
 
-### Example reason plot showing features that lead to prediction
+### Example reason plot showing how features changed the prediction
 ![Example_reason](https://github.com/Lion-Mod/HR-Attrition/blob/main/example_reason_plot.PNG)
 
 2. 1️⃣➕**Multi prediction** - upload a csv and get a dataframe back of the original data plus the **prediction** and **score**.
