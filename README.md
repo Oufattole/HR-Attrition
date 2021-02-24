@@ -1,36 +1,150 @@
-NOTE: the employee data is not real, it was generated and from this dataset from [Kaggle](https://www.kaggle.com/pavansubhasht/ibm-hr-analytics-attrition-dataset)
+<!-- Output copied to clipboard! -->
 
-# HR-Attrition 👔
-Will they stay or will they go? Predicting whether a fake dataset of employees will leave in the next 6 months.
+<!-----
+NEW: Check the "Suppress top comment" option to remove this info from the output.
 
-## Why this was done
-I haven't done any HR analytics before and the idea of encorporating ML/DL with this domain interests me. The main problem is acquiring HR data. Thankfully IBM has produced a **fake dataset** that has been used throughout this project. The other one is given the problem ("Who will leave in the next 6 months?") there isn't a high percentage of people who have left historically in the last 6 months which leads to an **imbalanced class problem**. How can this potentially be solved? **Generate more data**.
-
-What would happen if key team members left? Progress could stall or worst case regress. If these individuals can be identified early and not just identified but understand WHY they might leave, that is the power of this.
-
-Note: There is a lot of discussion about ML, DL and AI replacing jobs, this doesn't do so. I see the previously mentioned techniques allowing users to increase their productivity and in this particular use case, potentially saving employees leaving and improving the employees' work environment. If you had 3000 employees you could identify who might leave manually but not in a quick enough time nor efficiently. If you combine the knowledge of users and the model that is where this is powerful.
+Conversion time: 0.587 seconds.
 
 
-## Metric improvement incorporating synthetic data
-| Metric      | w/o generated data | w/ generated data | 
-| ----------- | ------------------ | ----------------- |
-|   AUC       |        0.85        |       0.95        |
-| Precision   |        0.73        |       0.92        |
-| Recall      |        0.42        |       0.84        |
+Using this Markdown file:
 
-## Who this benefits
-* 🕴️🕴️ **HR** - the obvious one. If employees respond to a survey and you have thousands of employees, without analysis you cannot efficiently find out who might be at risk of leaving. Secondly you will want to know employee's specific reasons as to why they might be at risk of leaving, it needs to be personal. Having a model that can tell you who might be at risk to leave the company and why they might leave saves HR time and offers a possible "save" of the employees at risk of leaving.
-* 💁**Employees** - employees at risk of leaving the company will likely have a reason to leave e.g. working overtime often. Some may be on the fence about leaving and if the model can capture it early through using the inputs such as working overtime often this can be resolved. If the predictions can then be interpretted (using SHAP values) then HR can use the reasons to approach the employee and discuss these pain points that weren't necessarily obvious before. The employee will hopefully stay and have a better work environment and their talent retained.
-* 🏭**Company** - there may be key members within a team that bring substantial value to their teams. If they were to leave then the company will potentially lose their value and may slow or lose progress from the employee's value and skills they bring. If the model captures them early, HR realise it and approach them with a personal discussion, they can potential "save" this employee from leaving and retain the value and skills they bring.
+1. Paste this output into your source file.
+2. See the notes and action items below regarding this conversion run.
+3. Check the rendered output (headings, lists, code blocks, tables) for proper
+   formatting and use a linkchecker before you publish this page.
 
-## Streamlit app
-The final model was used as an experiment using `streamlit` to create a user based app. The app is split into two sections...
-1. 1️⃣**Single prediction** - the user manually inputs values of an employee and finds out what the model predicts BUT it also includes a **reason plot** (highlighting what features contribute towards/away from the predicted value) using shap values.
-![Single prediction](https://github.com/Lion-Mod/HR-Attrition/blob/main/single_prediction.gif)
+Conversion notes:
 
-### Example reason plot showing how features changed the prediction
-![Example_reason](https://github.com/Lion-Mod/HR-Attrition/blob/main/example_reason_plot.PNG)
+* Docs to Markdown version 1.0β29
+* Tue Feb 23 2021 21:20:43 GMT-0800 (PST)
+* Source doc: HR-attrition
+* Tables are currently converted to HTML tables.
+----->
 
-2. 1️⃣➕**Multi prediction** - upload a csv and get a dataframe back of the original data plus the **prediction** and **score**.
-![Multi prediction](https://github.com/Lion-Mod/HR-Attrition/blob/main/multi_prediction.gif)
 
+[https://sdv.dev/SDV/user_guides/evaluation/evaluation_framework.html](https://sdv.dev/SDV/user_guides/evaluation/evaluation_framework.html) 
+
+
+
+*   "The output of this function call will be a number between 0 and 1 that will indicate us how similar the two tables are, being 0 the worst and 1 the best possible score."
+    *   This is incorrect even in the given documentation example
+*   bugs
+    *   sdv parameter names for copulaGAN had to be updated
+    *   the ord_feats had to be fixed
+    *   "\r" in the raw ipynb file causes an editor crash in jupyter notebook, I removed all of them in a python script
+*   Methodology Issues
+    *   He used AUC to choose his first model which was lr
+    *   Then he used AUC to choose his last model which was catboost, but he chose gbc which had the second highest AUC
+        *   I tried gbc with synthetic + original data and with only original data and found you get higher results with synthetic + original data
+    *   Dataset differences
+        *   the file size is smaller for the dataset given compared to the kaggle ibm one that is linked.
+        *   Both had a dimension of (1470, 35) so I think the difference is the compression algorithm from storing the data on github
+
+<table>
+  <tr>
+   <td>
+data
+   </td>
+   <td>Classifier
+   </td>
+   <td>Accuracy
+   </td>
+   <td>AUC
+   </td>
+   <td>Recall
+   </td>
+   <td>Precision
+   </td>
+   <td>F1
+   </td>
+   <td>Kappa
+   </td>
+   <td>MCC
+   </td>
+  </tr>
+  <tr>
+   <td>Original
+   </td>
+   <td>lr
+   </td>
+   <td>0.8794	
+   </td>
+   <td>0.8534	
+   </td>
+   <td>0.4463	
+   </td>
+   <td>0.7006	
+   </td>
+   <td>0.5388	
+   </td>
+   <td>0.4746	
+   </td>
+   <td>0.4934
+   </td>
+  </tr>
+  <tr>
+   <td>Original + synth
+   </td>
+   <td>lr
+   </td>
+   <td>0.8971	
+   </td>
+   <td>0.9564	
+   </td>
+   <td>0.8420	
+   </td>
+   <td>0.9512	
+   </td>
+   <td>0.8562	
+   </td>
+   <td>0.7964	
+   </td>
+   <td>0.8200
+   </td>
+  </tr>
+  <tr>
+   <td>Original
+   </td>
+   <td>gbc
+   </td>
+   <td>0.8686	
+   </td>
+   <td>0.8195	
+   </td>
+   <td>0.3140
+   </td>
+   <td>0.7010
+   </td>
+   <td>0.4233	
+   </td>
+   <td>0.3648	
+   </td>
+   <td>0.4056
+   </td>
+  </tr>
+  <tr>
+   <td>Original + synth
+   </td>
+   <td>gbc
+   </td>
+   <td>0.8971
+   </td>
+   <td>0.9564
+   </td>
+   <td>0.8420
+   </td>
+   <td>0.9512
+   </td>
+   <td>0.8562
+   </td>
+   <td>0.7964
+   </td>
+   <td>0.8200
+   </td>
+  </tr>
+</table>
+
+
+lr = logistic regression
+
+gbc = Gradient boosting classifier
