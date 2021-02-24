@@ -21,6 +21,7 @@ Conversion notes:
 * Tables are currently converted to HTML tables.
 ----->
 
+This Repo is a fork of https://github.com/Lion-Mod/HR-Attrition which contains bug fixes to that repo and reproduces similar results.
 
 [https://sdv.dev/SDV/user_guides/evaluation/evaluation_framework.html](https://sdv.dev/SDV/user_guides/evaluation/evaluation_framework.html) 
 
